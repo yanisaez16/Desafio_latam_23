@@ -15,3 +15,6 @@ En la carpeta resultados se encuentran los archivos generados por cada pregunta 
 <li>h) ¿Para qué aerolínea vuela Hung Cho? </li>
 <li>i)¿Cuántos vuelos A, B, C tiene Chao Ma? </li>  
 </ul>
+
+
+Para ejecutar el programa editar los path de donde estan los archivos y ejecutar con python prueba_yanira_saez.py y se mostrarán los resultados en la terminal.
