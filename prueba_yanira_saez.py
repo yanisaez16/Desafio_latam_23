@@ -13,6 +13,8 @@ sparkConf = SparkConf().setAppName("My SparkQL Application")
 sc = SparkContext(conf=sparkConf)
 spark = SparkSession(sc)
 
+**************** PYTHON ****************
+
 # a) En primer instancia se deben cargar los archivos vuelos y pilotos a un dataframe
 df_vuelos = spark.read.option("sep",",").option("header",True).option("inferSchema", True).csv("/Users/yanirasaez/Documents/ejercicios PYTHON 23/vuelos.csv")
 df_pilotos = spark.read.option("sep",",").option("header",True).option("inferSchema", True).csv("/Users/yanirasaez/Documents/ejercicios PYTHON 23/pilotos.csv")
@@ -77,3 +79,34 @@ df_aerolinea_hung_cho.write.option("header",True).mode('append').csv("/Users/yan
 df_aerolinea_chao_ma = spark.sql("SELECT Piloto,OnTime,COUNT(OnTime) as Cantidad_Vuelos FROM df_ontime2 where Piloto= 'Chao Ma' group by Piloto,OnTime")
 df_aerolinea_chao_ma.show()
 df_aerolinea_chao_ma.write.option("header",True).mode('append').csv("/Users/yanirasaez/Documents/ejercicios PYTHON 23/resultados/resultados_letraI.csv")
+
+
+
+**************** SQL ****************
+
+
+#¿Qué aerolínea tiene más vuelos?
+# La aerolinea 7 con 457 vuelos
+df_aerolinea_mas_vuelos = spark.sql("SELECT Aerolinea,Cantidad_Vuelos FROM (SELECT Aerolinea, COUNT(*) as Cantidad_Vuelos FROM vuelos_view GROUP BY Aerolinea) order by Cantidad_Vuelos desc limit 1")
+df_aerolinea_mas_vuelos.show()
+
+#¿Qué Origen se repite más?
+#SAP es el origen que se repite más 
+df_origen_repetido = spark.sql("SELECT Origen, Cantidad FROM (SELECT Origen, COUNT(*) as Cantidad FROM vuelos_view GROUP BY Origen) order by Cantidad desc limit 1")
+df_origen_repetido.show()
+
+#¿Desde donde vuela más la aerolínea 8?
+# Es a SAP con 134 vuelos
+df_origen_aero8= spark.sql("SELECT Aerolinea,Origen, Cantidad FROM (SELECT Aerolinea, Origen, COUNT(*) as Cantidad FROM vuelos_view where Aerolinea = '8' GROUP BY Aerolinea, Origen) order by Cantidad desc limit 1")
+df_origen_aero8.show()
+
+#¿Hacia dónde vuela más la aerolínea 4?
+# Es a SAP con 141 vuelos
+df_destino_aero4= spark.sql("SELECT Aerolinea,Destino, Cantidad FROM (SELECT Aerolinea, Destino, COUNT(*) as Cantidad FROM vuelos_view where Aerolinea = '4' GROUP BY Aerolinea, Destino) order by Cantidad desc limit 1")
+df_destino_aero4.show()
+
+#¿Qué piloto vuela más?
+# John Pierson con 1028 vuelos
+df_vuelos_pilotos.createOrReplaceTempView("vuelos_pilotos_view")
+df_piloto_max= spark.sql("SELECT Piloto, Cantidad_Vuelos FROM (SELECT Piloto, COUNT(*) as Cantidad_Vuelos FROM vuelos_pilotos_view GROUP BY Piloto) order by Cantidad_Vuelos desc limit 1")
+df_piloto_max.show()
