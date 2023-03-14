@@ -18,3 +18,12 @@ En la carpeta resultados se encuentran los archivos generados por cada pregunta 
 
 
 Para ejecutar el programa editar los path de donde estan los archivos y ejecutar con python prueba_yanira_saez.py y se mostrarán los resultados en la terminal.
+
+Las respuestas de SQL:
+<ul>
+<li>¿Qué aerolínea tiene más vuelos? R: La aerolínea 7 con 457 vuelos.</li>
+<li>¿Qué Origen se repite más? R: SAP es el origen que se repite más</li>
+<li>¿Desde donde vuela más la aerolínea 8? R: Es SAP con 134 vuelos</li>
+<li>¿Hacia dónde vuela más la aerolínea 4? R: Es SAP con 141 vuelos</li>
+<li>¿Qué piloto vuela más? R: Es John Pierson con 1028 vuelos</li>
+</ul>
